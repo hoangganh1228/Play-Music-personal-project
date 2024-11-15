@@ -10,7 +10,13 @@ module.exports.index = async (req, res) => {
   
 
   res.render("admin/pages/topics/index", {
-    pageTitle: "Trang chu de",
+    pageTitle: "Trang quản lí chủ đề",
     topics: topics
+  })
+}
+
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/topics/create", {
+    pageTitle: "Trang tạo mới chủ đề"
   })
 }

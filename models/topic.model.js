@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slug = require('mongoose-slug-updater');
 
 const topicSchema = new mongoose.Schema(
   {
@@ -6,7 +7,11 @@ const topicSchema = new mongoose.Schema(
     avatar: String,
     description: String,
     status: String,
-    slug: String,
+    slug: { 
+      type: String, 
+      slug: "name",
+      unique: true 
+    },
     deleted: {
       type: Boolean,
       default: false,
