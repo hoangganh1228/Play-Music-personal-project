@@ -2,6 +2,7 @@ const express = require("express");
 const database = require("./config/database");
 
 const bodyParser = require("body-parser");
+const systemConfig = require("./config/system");
 require("dotenv").config();
 
 const app = express();
@@ -17,6 +18,11 @@ app.use(express.static("public"));
 
 app.set("views", "./views");
 app.set("view engine", "pug");
+
+//App locals variables
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+
+
 // Routes
 
 route(app);
