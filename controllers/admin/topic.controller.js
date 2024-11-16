@@ -83,3 +83,21 @@ module.exports.editPatch = async (req, res) => {
   
   res.redirect("back");
 }
+
+// [DELETE] /topics/delete
+module.exports.delete = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await Topic.updateOne({
+      _id: id
+    }, {
+      deleted: true
+    })
+    req.flash("success", `Xóa chủ đề thành công!`)
+  } catch (error) {
+    req.flash("error", `Xóa chủ đề thất bại!`)
+  }
+
+  res.redirect("back");
+}
