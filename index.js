@@ -2,7 +2,7 @@ const express = require("express");
 const database = require("./config/database");
 const  path = require('path');
 const bodyParser = require("body-parser");
-
+const methodOverride = require('method-override')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const flash = require('express-flash');
@@ -22,7 +22,7 @@ const port = process.env.PORT;
 
 app.use(express.static(`${__dirname}/public`));
 
-// app.use(methodOverride('_method'))
+app.use(methodOverride('_method'))
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
