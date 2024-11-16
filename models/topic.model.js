@@ -10,7 +10,7 @@ const topicSchema = new mongoose.Schema(
     slug: { 
       type: String, 
       slug: "name",
-      unique: true 
+      // unique: true 
     },
     deleted: {
       type: Boolean,
