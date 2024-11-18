@@ -8,14 +8,14 @@ const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware")
 
 router.get("/", controller.index);
 
-// router.get("/create", controller.create);
+router.get("/create", controller.create);
 
-// router.post(
-//   "/create", 
-//   upload.single('avatar'),
-//   uploadCloud.upload,
-//   controller.createPost
-// );
+router.post(
+  "/create", 
+  upload.single('avatar'),
+  uploadCloud.upload,
+  controller.createPost
+);
 
 // router.get("/edit/:id", controller.edit);
 

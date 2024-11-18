@@ -13,3 +13,17 @@ module.exports.index = async (req, res) => {
   })
   
 }
+
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/songs/create", {
+    pageTitle: "Trang tạo mới bài hát"
+  })
+}
+
+module.exports.createPost = async (req, res) => {
+
+  console.log(req.body);
+  
+
+  res.send("OK");
+}
