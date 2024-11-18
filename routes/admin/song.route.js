@@ -12,8 +12,13 @@ router.get("/create", controller.create);
 
 router.post(
   "/create", 
-  upload.single('avatar'),
-  uploadCloud.upload,
+  upload.fields(
+    [
+      { name: 'avatar', maxCount: 1 },
+      { name: 'audio', maxCount: 1 }
+    ]
+  ),
+  uploadCloud.uploadFields,
   controller.createPost
 );
 

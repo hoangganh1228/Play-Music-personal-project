@@ -18,28 +18,28 @@ block main
           name="title"
           required
         )
+      div(class="form-group")
+        label(for="topic") Chủ đề
+        select(
+          name="topicId"
+          id="topic"
+          class="form-control"
+          required
+        )
+          option(value="" disabled selected) -- Chọn chủ đề --
+          each item in topics
+            option(value=item.id) #{item.title}
       //- div(class="form-group")
-      //-   label(for="topic") Chủ đề
+      //-   label(for="singer") Ca sĩ
       //-   select(
-      //-     name="topicId"
-      //-     id="topic"
+      //-     name="singerId"
+      //-     id="singer"
       //-     class="form-control"
       //-     required
       //-   )
-      //-     option(value="" disabled selected) -- Chọn chủ đề --
-      //-     each item in topics
-      //-       option(value=item.id) #{item.title}
-        //- div(class="form-group")
-        //-   label(for="singer") Ca sĩ
-        //-   select(
-        //-     name="singerId"
-        //-     id="singer"
-        //-     class="form-control"
-        //-     required
-        //-   )
-        //-     option(value="" disabled selected) -- Chọn ca sĩ --
-        //-     each item in singers
-        //-       option(value=item.id) #{item.fullName}
+      //-     option(value="" disabled selected) -- Chọn ca sĩ --
+      //-     each item in singers
+      //-       option(value=item.id) #{item.fullName}
       div(
         class="form-group"
         upload-image

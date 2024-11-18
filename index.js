@@ -1,6 +1,6 @@
 const express = require("express");
 const database = require("./config/database");
-const  path = require('path');
+const path = require('path');
 const bodyParser = require("body-parser");
 const methodOverride = require('method-override')
 const cookieParser = require('cookie-parser')

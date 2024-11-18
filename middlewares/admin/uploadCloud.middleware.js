@@ -1,36 +1,30 @@
-const cloudinary = require('cloudinary').v2
-const streamifier = require('streamifier')  
-// Cloudinary
-cloudinary.config({ 
-  cloud_name: 'dnczc3gzn', 
-  api_key: '185176958515381', 
-  api_secret: '6HbsgOAVH3UloQF9JsJ5QpB3zEI' 
-});
-// End Cloudinary
-module.exports.upload = (req, res, next) => {
-  if(req.file) {
-    let streamUpload = (req) => {
-      return new Promise((resolve, reject) => {
-        let stream = cloudinary.uploader.upload_stream(
-          (error, result) => {
-            if (result) {
-              resolve(result);
-            } else {
-              reject(error);
-            }
-          }
-        );
-        streamifier.createReadStream(req.file.buffer).pipe(stream);
-      });
-    };
-    async function upload(req) {
-      let result = await streamUpload(req);
-      req.body[req.file.fieldname] = result.secure_url;
-      next();
-    }
-    upload(req);
+const { uploadToCloudinary } = require("../../helpers/uploadToCloudinary"); 
+
+module.exports.uploadSingle = async (req, res, next) => {
+  try {
+    
+    const result = await uploadToCloudinary(req.file.buffer);4
+    req.body[req.file.fieldname] = result
+  } catch (error) {
+    console.error("Error uploading single file:", error);
   }
-  else {
-    next();
-  }
+
+  next();
 }
+
+module.exports.uploadFields = async (req, res, next) => {
+  for (const key in req.files) {
+    req.body[key] = [];
+    const array = req.files[key]; 
+
+    for (const item of array) {
+      try {
+        const result = await uploadToCloudinary(item.buffer);
+        req.body[key] = result; 
+      } catch (error) {
+        console.error(`Error uploading file in field ${key}:`, error);
+      }
+    }
+  }
+  next(); 
+};
