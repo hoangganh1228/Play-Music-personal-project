@@ -15,6 +15,7 @@ module.exports.index = async (req, res) => {
   
 }
 
+// [GET]
 module.exports.create = async (req, res) => {
   const topics = await Topic.find({
     deleted: false
@@ -26,6 +27,7 @@ module.exports.create = async (req, res) => {
   })
 }
 
+// [POST]
 module.exports.createPost = async (req, res) => {
   
   try {
@@ -37,7 +39,7 @@ module.exports.createPost = async (req, res) => {
       description: req.body.description,
       status: req.body.status,
       avatar: req.body.avatar,
-      audio: req.body.audio
+      audio: req.body.audio,
     })  
   
     objectSong.save();
@@ -48,4 +50,23 @@ module.exports.createPost = async (req, res) => {
   
   res.redirect("back");
   
+}
+
+// [GET]
+module.exports.edit = async (req, res) => {
+  const id = req.params.id;
+
+  const song = await Song.findOne({
+    _id: id
+  })
+
+  const topics = await Song.find({
+    deleted: false
+  })
+
+  res.render("admin/pages/songs/edit", {
+    pageTitle: "Trang chỉnh sưa bài hát",
+    song: song,
+    topics: topics
+  })
 }
