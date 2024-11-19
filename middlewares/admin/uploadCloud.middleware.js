@@ -1,10 +1,14 @@
 const { uploadToCloudinary } = require("../../helpers/uploadToCloudinary"); 
 
 module.exports.uploadSingle = async (req, res, next) => {
+  if (!req.file) {
+    console.error("No file received");
+    return res.status(400).json({ error: "No file uploaded" });
+  }
+
   try {
-    
-    const result = await uploadToCloudinary(req.file.buffer);4
-    req.body[req.file.fieldname] = result
+    const result = await uploadToCloudinary(req.file.buffer);
+    req.body[req.file.fieldname] = result;
   } catch (error) {
     console.error("Error uploading single file:", error);
   }

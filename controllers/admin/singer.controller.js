@@ -40,3 +40,40 @@ module.exports.createPost = async (req, res) => {
   res.redirect("back");
   
 }
+
+// [GET]
+module.exports.edit = async (req, res) => {
+  const id = req.params.id;
+
+  const singer = await Singer.findOne({
+    _id: id
+  });
+
+  res.render("admin/pages/singers/edit", {
+    pageTitle: "Trang chỉnh sửa ca sĩ",
+    singer: singer
+  })
+}
+
+// [PATCH]
+module.exports.editPatch = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const objectSinger = {
+      title: req.body.fullName,
+      status: req.body.status,
+      avatar: req.body.avatar,
+    }
+
+    await Singer.updateOne({
+      _id: id
+    }, objectSinger);
+
+    req.flash("success", `Sửa ca sĩ thành công!`)
+  } catch (error) {
+    req.flash("error", `Sửa ca sĩ thất bại!`)
+  }
+
+  res.redirect("back");
+}
