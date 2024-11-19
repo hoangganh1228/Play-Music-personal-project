@@ -70,3 +70,30 @@ module.exports.edit = async (req, res) => {
     topics: topics
   })
 }
+
+// [PATCH]
+module.exports.editPatch = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const objectSong = {
+      title: req.body.title,
+      topicId: req.body.topicId,
+      lyrics: req.body.lyrics,
+      description: req.body.description,
+      status: req.body.status,
+      avatar: req.body.avatar,
+      audio: req.body.audio,
+    }
+
+    await Song.updateOne({
+      _id: id
+    }, objectSong);
+
+    req.flash("success", `Sửa bài hát thành công!`)
+  } catch (error) {
+    req.flash("error", `Sửa bài hát thất bại!`)
+  }
+
+  res.redirect("back");
+}

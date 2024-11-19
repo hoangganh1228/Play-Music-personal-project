@@ -24,12 +24,17 @@ router.post(
 
 router.get("/edit/:id", controller.edit);
 
-// router.patch(
-//   "/edit/:id", 
-//   upload.single('avatar'),
-//   uploadCloud.upload,
-//   controller.editPatch
-// );
+router.patch(
+  "/edit/:id", 
+  upload.fields(
+    [
+      { name: 'avatar', maxCount: 1 },
+      { name: 'audio', maxCount: 1 }
+    ]
+  ),
+  uploadCloud.uploadFields,
+  controller.editPatch
+);
 
 // router.delete("/delete/:id", controller.delete);
 
