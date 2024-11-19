@@ -77,3 +77,22 @@ module.exports.editPatch = async (req, res) => {
 
   res.redirect("back");
 }
+
+// [DELETE]
+module.exports.delete = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Singer.updateOne({
+      _id: id
+    }, {
+      deleted: true
+    });
+
+    req.flash("success", `Xóa ca sĩ thành công!`)
+  } catch (error) {
+    req.flash("error", `xóa ca sĩ thất bại!`)
+  }
+
+  res.redirect("back");
+}
