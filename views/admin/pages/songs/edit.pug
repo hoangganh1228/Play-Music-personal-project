@@ -34,6 +34,20 @@ block main
             value=item.id
             selected=(item.id==song.topicId ? true : false) 
             ) #{item.title}
+    div(class="form-group")
+      label(for="topic") Ca sĩ
+      select(
+        name="singerId"
+        id="singerId"
+        class="form-control"
+        required
+      )
+        option(value="" disabled) -- Chọn ca sĩ --
+        each item in singers
+          option(
+            value=item.id
+            selected=(item.id==song.singerId ? true : false) 
+            ) #{item.fullName}
     div(
       class="form-group"
       upload-image

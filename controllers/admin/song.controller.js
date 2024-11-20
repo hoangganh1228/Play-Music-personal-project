@@ -65,16 +65,21 @@ module.exports.edit = async (req, res) => {
 
   const song = await Song.findOne({
     _id: id
-  })
+  });
 
   const topics = await Song.find({
     deleted: false
-  })
+  }).select("title");
+
+  const singers = await Singer.find({
+    deleted: false
+  }).select("fullName");
 
   res.render("admin/pages/songs/edit", {
     pageTitle: "Trang chỉnh sưa bài hát",
     song: song,
-    topics: topics
+    topics: topics,
+    singers: singers
   })
 }
 
@@ -82,10 +87,11 @@ module.exports.edit = async (req, res) => {
 module.exports.editPatch = async (req, res) => {
   try {
     const id = req.params.id;
-
+    
     const objectSong = {
       title: req.body.title,
       topicId: req.body.topicId,
+      singerId: req.body.singerId,
       lyrics: req.body.lyrics,
       description: req.body.description,
       status: req.body.status,
