@@ -1,5 +1,6 @@
 const Song = require("../../models/song.model");
-const Topic = require("../../models/topic.model")
+const Topic = require("../../models/topic.model");
+const Singer = require("../../models/singer.model");
 
 module.exports.index = async (req, res) => {
   const find = {
@@ -21,9 +22,14 @@ module.exports.create = async (req, res) => {
     deleted: false
   }).select("title");
 
+  const singers = await Singer.find({
+    deleted: false
+  }).select("fullName")
+
   res.render("admin/pages/songs/create", {
     pageTitle: "Trang tạo mới bài hát",
-    topics: topics
+    topics: topics,
+    singers: singers
   })
 }
 
@@ -35,6 +41,7 @@ module.exports.createPost = async (req, res) => {
     const objectSong = new Song({
       title: req.body.title,
       topicId: req.body.topicId,
+      singerId: req.body.singerId,
       lyrics: req.body.lyrics,
       description: req.body.description,
       status: req.body.status,
