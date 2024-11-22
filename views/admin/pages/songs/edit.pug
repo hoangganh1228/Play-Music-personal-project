@@ -102,26 +102,6 @@ block main
         rows="5"
         textarea-mce
       ) !{song.description}
-    div(class="form-group form-check form-check-inline")
-      input(
-        type="radio"
-        class="form-check-input"
-        id="statusActive"
-        name="status"
-        value="active"
-        checked=(song.status == "active" ? true : false)
-      )
-      label(for="statusActive" class="form-check-label") Hoạt động
-    div(class="form-group form-check form-check-inline")
-      input(
-        type="radio"
-        class="form-check-input"
-        id="statusInActive"
-        name="status"
-        value="inactive"
-        checked=(song.status == "inactive" ? true : false)
-      )
-      label(for="statusInActive" class="form-check-label") Dừng hoạt động
     div(class="form-group")
       button(
         type="submit"
