@@ -2,112 +2,114 @@ extends ../../layouts/default
 include ../../mixins/alert
 
 block main 
-  +alert-success(5000)
-  +alert-error(5000)
+  if(role.permissions.includes("songs_edit"))
 
-  form(
-    action=`${prefixAdmin}/songs/edit/${song.id}?_method=PATCH`
-    method="POST"
-    enctype="multipart/form-data"
-  )
-    div(class="form-group")
-      label(for="title") Tiêu đề
-      input(
-        type="text"
-        class="form-control"
-        id="title"
-        name="title"
-        value=song.title
-        required
-      )
-    div(class="form-group")
-      label(for="topic") Chủ đề
-      select(
-        name="topicId"
-        id="topic"
-        class="form-control"
-        required
-      )
-        option(value="" disabled) -- Chọn chủ đề --
-        each item in topics
-          option(
-            value=item.id
-            selected=(item.id==song.topicId ? true : false) 
-            ) #{item.title}
-    div(class="form-group")
-      label(for="topic") Ca sĩ
-      select(
-        name="singerId"
-        id="singerId"
-        class="form-control"
-        required
-      )
-        option(value="" disabled) -- Chọn ca sĩ --
-        each item in singers
-          option(
-            value=item.id
-            selected=(item.id==song.singerId ? true : false) 
-            ) #{item.fullName}
-    div(
-      class="form-group"
-      upload-image
+    +alert-success(5000)
+    +alert-error(5000)
+
+    form(
+      action=`${prefixAdmin}/songs/edit/${song.id}?_method=PATCH`
+      method="POST"
+      enctype="multipart/form-data"
     )
-      label(for="avatar") Ảnh
-      input(
-        type="file"
-        class="form-control-file"
-        id="avatar"
-        name="avatar"
-        accept="image/*"
-        upload-image-input
-      )
-      img(
-        src=song.avatar
-        class="image-preview"
-        upload-image-preview
-      )
-    div(
+      div(class="form-group")
+        label(for="title") Tiêu đề
+        input(
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          value=song.title
+          required
+        )
+      div(class="form-group")
+        label(for="topic") Chủ đề
+        select(
+          name="topicId"
+          id="topic"
+          class="form-control"
+          required
+        )
+          option(value="" disabled) -- Chọn chủ đề --
+          each item in topics
+            option(
+              value=item.id
+              selected=(item.id==song.topicId ? true : false) 
+              ) #{item.title}
+      div(class="form-group")
+        label(for="topic") Ca sĩ
+        select(
+          name="singerId"
+          id="singerId"
+          class="form-control"
+          required
+        )
+          option(value="" disabled) -- Chọn ca sĩ --
+          each item in singers
+            option(
+              value=item.id
+              selected=(item.id==song.singerId ? true : false) 
+              ) #{item.fullName}
+      div(
         class="form-group"
-        upload-audio
+        upload-image
       )
-        label(for="audio") File âm thanh
+        label(for="avatar") Ảnh
         input(
           type="file"
           class="form-control-file"
-          id="audio"
-          name="audio"
-          accept="audio/*"
-          upload-audio-input
+          id="avatar"
+          name="avatar"
+          accept="image/*"
+          upload-image-input
         )
-        audio(
-          controls
-          upload-audio-play
+        img(
+          src=song.avatar
+          class="image-preview"
+          upload-image-preview
         )
-          source(src=song.audio)
-    div(class="form-group")
-      label(for="lyrics") Lời bài hát
-      textarea(
-        class="form-control"
-        id="lyrics"
-        name="lyrics"
-        rows="20"
-      ) #{song.lyrics} 
-    div(class="form-group")
-      label(for="desc") Mô tả
-      textarea(
-        type="text"
-        class="form-control"
-        id="desc"
-        name="description"
-        rows="5"
-        textarea-mce
-      ) !{song.description}
-    div(class="form-group")
-      button(
-        type="submit"
-        class="btn btn-primary"
-      ) Cập nhật
+      div(
+          class="form-group"
+          upload-audio
+        )
+          label(for="audio") File âm thanh
+          input(
+            type="file"
+            class="form-control-file"
+            id="audio"
+            name="audio"
+            accept="audio/*"
+            upload-audio-input
+          )
+          audio(
+            controls
+            upload-audio-play
+          )
+            source(src=song.audio)
+      div(class="form-group")
+        label(for="lyrics") Lời bài hát
+        textarea(
+          class="form-control"
+          id="lyrics"
+          name="lyrics"
+          rows="20"
+        ) #{song.lyrics} 
+      div(class="form-group")
+        label(for="desc") Mô tả
+        textarea(
+          type="text"
+          class="form-control"
+          id="desc"
+          name="description"
+          rows="5"
+          textarea-mce
+        ) !{song.description}
+      div(class="form-group")
+        button(
+          type="submit"
+          class="btn btn-primary"
+        ) Cập nhật
 
-    script(src="/admin/js/script.js")
+      script(src="/admin/js/script.js")
 
-  
+    

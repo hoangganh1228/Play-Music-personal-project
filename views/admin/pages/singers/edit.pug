@@ -2,72 +2,74 @@ extends ../../layouts/default
 include ../../mixins/alert
 
 block main 
-  +alert-success(5000)
-  +alert-error(5000)
-  h1 #{pageTitle}
+  if(role.permissions.includes("singers_edit"))
+  
+    +alert-success(5000)
+    +alert-error(5000)
+    h1 #{pageTitle}
 
-  form(
-    action=`${prefixAdmin}/singers/edit/${singer.id}?_method=PATCH`
-    method="POST"
-    enctype="multipart/form-data"
-  )
-
-    div(class="form-group")
-      label(for="title") Họ tên
-      input(
-        type="text"
-        class="form-control"
-        id="title"
-        name="title"
-        value=singer.fullName
-        required
-      )
-    
-    div(
-      class="form-group"
-      upload-image
+    form(
+      action=`${prefixAdmin}/singers/edit/${singer.id}?_method=PATCH`
+      method="POST"
+      enctype="multipart/form-data"
     )
-      label(for="avatar") Ảnh
-      input(
-        type="file" 
-        class="form-control-file"
-        id="avatar"
-        name="avatar"
-        accept="image/*"
-        upload-image-input
-      )
-      img(
-        src=singer.avatar
-        upload-image-preview
-        class="image-preview"
-      )
 
-    div(class="form-group form-check form-check-inline")
-      input(
-        type="radio"
-        class="form-check-input"
-        id="statusActive"
-        name="status"
-        value="active"
-        checked=(singer.status == "active" ? true : false)
+      div(class="form-group")
+        label(for="title") Họ tên
+        input(
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          value=singer.fullName
+          required
+        )
+      
+      div(
+        class="form-group"
+        upload-image
       )
-      label(for="statusActive" class="form-check-label") Hoạt động
-    div(class="form-group form-check form-check-inline")
-      input(
-        type="radio"
-        class="form-check-input"
-        id="statusInActive"
-        name="status"
-        value="inactive"
-        checked=(singer.status == "inactive" ? true : false)
-      )
-      label(for="statusInActive" class="form-check-label") Dừng hoạt động
-    div(class="form-group")
-      button(
-        type="submit"
-        class="btn btn-primary"
-      ) Cập nhật
-    
-    script(src="/admin/js/script.js")
+        label(for="avatar") Ảnh
+        input(
+          type="file" 
+          class="form-control-file"
+          id="avatar"
+          name="avatar"
+          accept="image/*"
+          upload-image-input
+        )
+        img(
+          src=singer.avatar
+          upload-image-preview
+          class="image-preview"
+        )
+
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusActive"
+          name="status"
+          value="active"
+          checked=(singer.status == "active" ? true : false)
+        )
+        label(for="statusActive" class="form-check-label") Hoạt động
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusInActive"
+          name="status"
+          value="inactive"
+          checked=(singer.status == "inactive" ? true : false)
+        )
+        label(for="statusInActive" class="form-check-label") Dừng hoạt động
+      div(class="form-group")
+        button(
+          type="submit"
+          class="btn btn-primary"
+        ) Cập nhật
+      
+      script(src="/admin/js/script.js")
 
 
