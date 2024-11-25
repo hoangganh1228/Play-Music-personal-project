@@ -36,3 +36,42 @@ module.exports.list = async (req, res) => {
     songs: songs
 });
 }
+
+module.exports.detail = async (req, res) => {
+  const slugSong = req.params.slugSong;
+
+  const find = {
+    status: "active",
+    deleted: false
+  }
+
+  if(slugSong) {
+    find.slug = slugSong;
+  }
+
+  const song = await Song.findOne({
+    slug: slugSong,
+    status: "active",
+    deleted: false
+  })
+
+  const singer = await Singer.findOne({
+    _id: song.singerId,
+    status: "active",
+    deleted: false
+  }).select("fullName")
+
+  const topic = await Topic.findOne({
+    _id: song.topicId,
+    status: "active",
+    deleted: false
+  }).select("title");
+
+
+  res.render("client/pages/songs/detail", {
+    pageTitle: song.title,
+    song: song,
+    singer: singer,
+    topic: topic
+  });
+}
