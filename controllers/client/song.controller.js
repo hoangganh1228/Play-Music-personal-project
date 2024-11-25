@@ -2,7 +2,7 @@ const Song = require("../../models/song.model");
 const Topic = require("../../models/topic.model");
 const Singer = require("../../models/singer.model");
 
-
+// [GET]
 module.exports.list = async (req, res) => {
   const find = {
     status: "active",
@@ -37,6 +37,7 @@ module.exports.list = async (req, res) => {
 });
 }
 
+// [GET]
 module.exports.detail = async (req, res) => {
   const slugSong = req.params.slugSong;
 
@@ -74,4 +75,30 @@ module.exports.detail = async (req, res) => {
     singer: singer,
     topic: topic
   });
+}
+
+// [PATCH]
+module.exports.like = async (req, res) => {
+  const typeLike = req.params.typeLike;
+  const idSong = req.params.idSong;
+
+  const song = await Song.findOne({
+    _id: idSong,
+    status: "active",
+    deleted: false
+  })
+
+  const newLike = typeLike == "like" ? song.like + 1 : song.like - 1;
+
+  await Song.updateOne({
+    _id: idSong
+  }, {
+    like: newLike
+  })
+
+  res.json({
+    code: 200,
+    message: "Thanh cong!",
+    like: newLike
+  })
 }

@@ -29,3 +29,34 @@ if(aplayer) {
     });
 }
 //End APlayer
+
+// Button Like
+
+const buttonLike = document.querySelector("[button-like]");
+
+if(buttonLike) {
+  buttonLike.addEventListener('click', () => {
+    const idSong = buttonLike.getAttribute("button-like");
+    const isActive = buttonLike.classList.contains("active");
+
+    const typeLike = isActive ? "dislike" : "like";
+
+    const link = `/songs/like/${typeLike}/${idSong}`;
+
+    const options = {
+      method: "PATCH"
+    }
+
+    fetch(link, options)
+      .then(res => res.json())
+      .then(data => {
+        if(data && data.code == 200) {
+          const span = buttonLike.querySelector("span");
+          span.innerHTML = `${data.like} thích`
+          buttonLike.classList.toggle("active")
+        }
+      })
+  })
+}
+
+// End Button Like
