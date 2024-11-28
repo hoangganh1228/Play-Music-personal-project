@@ -49,8 +49,6 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 // Routes
 
-
-
 route(app);
 routeAdmin(app);
 
