@@ -17,18 +17,22 @@ module.exports.list = async (req, res) => {
     deleted: false
   })
 
+
   if(slugTopic) {
     find.topicId = topic.id
   }
 
   const songs = await Song.find(find);
-
+  
   for(const song of songs) {
     const infoSinger  = await Singer.findOne({
       _id: song.singerId,
       deleted: false
     }).select("fullName");
-    song.infoSinger = infoSinger 
+    
+    if(infoSinger) {
+      song.infoSinger = infoSinger 
+    }
   }
 
 
@@ -76,6 +80,8 @@ module.exports.detail = async (req, res) => {
   })
 
   song.isFavoriteSong = favoriteSong
+
+  
 
 
   res.render("client/pages/songs/detail", {

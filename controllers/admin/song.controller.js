@@ -67,7 +67,7 @@ module.exports.edit = async (req, res) => {
     _id: id
   });
 
-  const topics = await Song.find({
+  const topics = await Topic.find({
     deleted: false
   }).select("title");
 
