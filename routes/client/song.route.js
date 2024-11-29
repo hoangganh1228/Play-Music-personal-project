@@ -9,4 +9,6 @@ router.get("/detail/:slugSong", controller.detail);
 
 router.patch("/like/:typeLike/:idSong", controller.like);
 
+router.patch("/favorite/:typeFavorite/:idSong", controller.favorite);
+
 module.exports = router;

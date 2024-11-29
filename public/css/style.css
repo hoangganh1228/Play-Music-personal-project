@@ -677,4 +677,12 @@ p {
   font-size: 14px;
   padding: 10px 15px;
 }
+
+.singer-detail .inner-actions .inner-heart.active {
+  color: #b90000;
+}
+.singer-detail .inner-actions .inner-heart.active i {
+  font-weight: 900;
+}
+
 /* End singer-detail */

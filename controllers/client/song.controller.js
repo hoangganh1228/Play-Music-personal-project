@@ -1,6 +1,7 @@
 const Song = require("../../models/song.model");
 const Topic = require("../../models/topic.model");
 const Singer = require("../../models/singer.model");
+const FavoriteSong  = require("../../models/favourite-song.model");
 
 // [GET]
 module.exports.list = async (req, res) => {
@@ -29,6 +30,7 @@ module.exports.list = async (req, res) => {
     }).select("fullName");
     song.infoSinger = infoSinger 
   }
+
 
 
   res.render("client/pages/songs/list", {
@@ -69,6 +71,13 @@ module.exports.detail = async (req, res) => {
   }).select("title");
 
 
+  const favoriteSong = await FavoriteSong.findOne({
+    songId: song.id
+  })
+
+  song.isFavoriteSong = favoriteSong
+
+
   res.render("client/pages/songs/detail", {
     pageTitle: song.title,
     song: song,
@@ -101,4 +110,38 @@ module.exports.like = async (req, res) => {
     message: "Thanh cong!",
     like: newLike
   })
+}
+
+// [PATCH]
+module.exports.favorite = async (req, res) => {
+  const idSong = req.params.idSong;
+  const typeFavorite = req.params.typeFavorite;
+
+  switch(typeFavorite) {
+    case "favorite":
+      const existFavoriteSong = await FavoriteSong.findOne({
+        songId: idSong
+      });
+
+      if(!existFavoriteSong) {
+        const record = new FavoriteSong({
+          // userId: "",
+          songId: idSong
+        });
+        await record.save();
+      }
+      break;
+    case "unfavorite":
+      await FavoriteSong.deleteOne({
+        songId: idSong
+      });
+      break;
+    default:
+      break;
+  }
+
+  res.json({
+    code: 200,
+    message: "Thành công!"
+  });
 }
