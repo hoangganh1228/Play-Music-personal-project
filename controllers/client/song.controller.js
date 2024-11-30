@@ -151,3 +151,31 @@ module.exports.favorite = async (req, res) => {
     message: "Thành công!"
   });
 }
+
+// [PATCH]
+module.exports.listen = async (req, res) => {
+  const idSong = req.params.idSong;
+
+  const song = await Song.findOne({
+    _id: idSong
+  });
+
+  const listen = song.listen + 1;
+
+  await Song.updateOne({
+    _id: idSong
+  }, {
+    listen: listen
+  });
+
+  const songNew = await Song.findOne({
+    _id: idSong
+  });
+
+  res.json({
+    code: 200,
+    message: "Thành công!",
+    listen: songNew.listen
+  });
+
+}
