@@ -3,6 +3,6 @@ const router = express.Router();
 
 const controller = require("../../controllers/client/search.controller");
 
-router.get("/result", controller.result);
+router.get("/:type", controller.result);
 
 module.exports = router;
