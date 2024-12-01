@@ -19,7 +19,6 @@ database.connect();
 
 const port = process.env.PORT;
 
-
 app.use(express.static(`${__dirname}/public`));
 
 app.use(methodOverride('_method'))
