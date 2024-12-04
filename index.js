@@ -45,7 +45,6 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 //App locals variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
-
 // Routes
 
 route(app);
