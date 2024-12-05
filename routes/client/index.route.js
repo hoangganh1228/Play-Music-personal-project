@@ -3,6 +3,7 @@ const topicRoute = require("./topic.route");
 const songRoute = require("./song.route");
 const favoriteSongRoute = require("./favorite.route");
 const searchRoutes = require("./search.route");
+const userRoute = require("./user.route");
 
 module.exports = (app) => {
   app.use("/", homeRoute);
@@ -13,6 +14,8 @@ module.exports = (app) => {
 
   app.use("/favorite-songs", favoriteSongRoute);
 
-  app.use("/search", searchRoutes)
+  app.use("/search", searchRoutes);
+
+  app.use("/user", userRoute);
 
 }
