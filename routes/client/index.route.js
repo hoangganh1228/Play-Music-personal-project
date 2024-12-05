@@ -4,8 +4,11 @@ const songRoute = require("./song.route");
 const favoriteSongRoute = require("./favorite.route");
 const searchRoutes = require("./search.route");
 const userRoute = require("./user.route");
+const userMiddleware = require("../../middlewares/client/user.middleware");
 
 module.exports = (app) => {
+  app.use(userMiddleware.infoUser);
+
   app.use("/", homeRoute);
 
   app.use("/topics", topicRoute);
