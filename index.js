@@ -30,7 +30,6 @@ app.set("views", `${__dirname}//views`);
 app.set("view engine", "pug");
 
 
-
 app.use(cookieParser('JHFJSBFJKSE'));
 
 app.use(session({ cookie: { maxAge: 60000 }}));
