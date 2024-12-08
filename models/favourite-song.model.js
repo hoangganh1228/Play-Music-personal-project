@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const favoriteSongSchema = new mongoose.Schema(
   {
-    // userId: String,
+    userId: String,
     songId: String,
     deleted: {
       type: Boolean,
