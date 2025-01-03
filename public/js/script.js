@@ -151,6 +151,15 @@ if(boxSearch) {
 
 // End Search Suggest
 
+const buttonAddPlaylist = document.querySelector("[button-add-playlist]");
+console.log(buttonAddPlaylist);
+buttonAddPlaylist.addEventListener("click", () => {
+  const idSong = buttonAddPlaylist.getAttribute("data-id");
+  console.log(idSong);
+  
+})
+
+
 // Show Alert
 const showAlert = document.querySelector("[show-alert]");
 if(showAlert) {

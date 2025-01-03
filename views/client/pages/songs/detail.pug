@@ -21,6 +21,13 @@ block main
               span #{song.listen} lượt nghe
             div(class=("inner-action inner-heart " + (song.isFavoriteSong ? "active" : "")) button-favorite=song.id)
               <i class="fa-regular fa-heart"></i> Bài hát yêu thích
+            button(
+              class="btn btn-success"
+              button-add-playlist
+              data-id=song.id
+            )
+              i(class="bi bi-plus-lg") 
+              | Thêm vào danh sách phát
           .inner-play
             .inner-avatar
               img(src=song.avatar)
