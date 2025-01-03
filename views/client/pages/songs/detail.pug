@@ -47,3 +47,40 @@ block main
             .inner-label Lời bài hát
             .inner-text
               | !{song.lyrics}
+
+
+
+  //- Modal chọn playlist
+  div.modal.fade#playlistModal(tabindex="-1" aria-hidden="true")
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          h5.modal-title Chọn Playlist
+          button.btn-close(data-bs-dismiss="modal" aria-label="Close")
+        div.modal-body
+          ul#playlistList
+            li Chưa có danh sách phát
+        div.modal-footer
+          button.btn.btn-primary#createNewPlaylist(type="button") Tạo Playlist Mới
+          button.btn.btn-success#addToPlaylist(type="button") Thêm vào Playlist
+          button.btn.btn-secondary(data-bs-dismiss="modal") Đóng
+
+  div.modal.fade#createPlaylistModal(tabindex="-1" aria-labelledby="createPlaylistModalLabel" aria-hidden="true")
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          h5#createPlaylistModalLabel.modal-title Tạo Playlist Mới
+          button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+        div.modal-body
+          form#playlistForm
+            div.mb-3
+              label(for="playlistTitle") Tên Playlist
+              input#playlistTitle.form-control(type="text" placeholder="Nhập tên playlist")
+            div.mb-3
+              label(for="playlistStatus") Trạng Thái
+              select#playlistStatus.form-control
+                option(value="public") Công khai
+                option(value="private") Riêng tư
+        div.modal-footer
+          button.btn.btn-success(type="button" id="savePlaylist") Lưu Playlist
+          button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Hủy

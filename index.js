@@ -22,6 +22,7 @@ const port = process.env.PORT;
 app.use(express.static(`${__dirname}/public`));
 
 app.use(methodOverride('_method'))
+app.use(express.json());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))

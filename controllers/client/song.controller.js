@@ -2,7 +2,7 @@ const Song = require("../../models/song.model");
 const Topic = require("../../models/topic.model");
 const Singer = require("../../models/singer.model");
 const FavoriteSong  = require("../../models/favourite-song.model");
-
+const Playlist = require("../../models/playlist.model");
 // [GET]
 module.exports.list = async (req, res) => {
   const find = {
@@ -177,5 +177,33 @@ module.exports.listen = async (req, res) => {
     message: "Thành công!",
     listen: songNew.listen
   });
+
+}
+
+// [POST]
+module.exports.playlistCreate = async (req, res) => {
+  try {
+    const { title, status } = req.body;
+    console.log(req.body);
+    console.log(title);
+    
+    
+    const objectPlaylist = new Playlist({
+      title: title,
+      status: status
+    })
+    objectPlaylist.save();
+
+    res.json({
+      code: 200,
+      message: "Thanh cong!",
+     })
+  } catch (error) {
+    res.json({
+      code: 500 ,
+      message: "Khong thanh cong!",
+    })
+  }
+  
 
 }

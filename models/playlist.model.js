@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const playlistSchema = new mongoose.Schema(
   {
     title: String, // Tên danh sách phát
-    description: String, // Mô tả (nếu cần)
     userId: { 
       type: mongoose.Schema.Types.ObjectId, 
       ref: "User" 

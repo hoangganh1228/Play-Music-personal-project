@@ -13,4 +13,6 @@ router.patch("/favorite/:typeFavorite/:idSong", controller.favorite);
 
 router.patch("/listen/:idSong", controller.listen);
 
+router.post("/create/playlist", controller.playlistCreate);
+
 module.exports = router;
