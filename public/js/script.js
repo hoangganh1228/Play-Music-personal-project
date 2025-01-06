@@ -180,8 +180,8 @@ buttonAddPlaylist.addEventListener("click", () => {
           const li = document.createElement("li");
           li.innerHTML = `
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="playlist-${playlist.id}" value="${playlist.id}">
-              <label class="form-check-label" for="playlist-${playlist.id}">${playlist.title}</label>
+              <input class="form-check-input" type="checkbox" id="playlist-${playlist._id}" value="${playlist._id}">
+              <label class="form-check-label" for="playlist-${playlist._id}">${playlist.title}</label>
             </div>
           `;
           playlistList.appendChild(li);
@@ -242,6 +242,45 @@ savePlaylistButton.addEventListener("click", () => {
 
 if(addToPlaylistButton) {
   addToPlaylistButton.addEventListener("click", () => {
+    const selectedPlaylists = Array.from(
+      document.querySelectorAll("#playlistList .form-check-input:checked")
+    ).map(checkbox => checkbox.value); // Lấy danh sách ID playlist được chọn
+  
+    const idSong = buttonAddPlaylist.getAttribute("data-id");
+
+    if (selectedPlaylists.length === 0) {
+      alert("Vui lòng chọn ít nhất một danh sách phát!");
+      return;
+    }
+
+    const link = `/songs/playlists/add-to-playlist`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        songId: idSong,
+        playlistIds: selectedPlaylists,
+      }),
+    }
+
+    fetch(link, options)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.code === 200) {
+          alert("Bài hát đã được thêm vào danh sách phát!");
+          modalPlaylist.hide(); // Đóng modal
+        } else {
+          alert("Lỗi khi thêm bài hát vào danh sách phát!");
+        }
+      })
+      .catch((err) => {
+        console.error("Lỗi khi thêm bài hát:", err);
+      });
+
+    
+
     
   })
 }

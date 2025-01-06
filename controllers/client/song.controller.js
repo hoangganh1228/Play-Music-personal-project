@@ -2,8 +2,9 @@ const Song = require("../../models/song.model");
 const Topic = require("../../models/topic.model");
 const Singer = require("../../models/singer.model");
 const FavoriteSong  = require("../../models/favourite-song.model");
-const Playlist = require("../../models/playlist.model");
 const User = require("../../models/user.model");
+const Playlist = require("../../models/playlist.model");
+const PlaylistSong = require("../../models/playlist-song.model");
 // [GET]
 module.exports.list = async (req, res) => {
   const find = {
@@ -228,14 +229,49 @@ module.exports.getPlaylists = async (req, res) => {
     }
   
     const playlists = await Playlist.find({ userId: user._id });
-    // console.log(playlists);
+    console.log(playlists);
     
     res.json({
       code: 200,
-      playlists,
+      playlists: playlists,
     });
   } catch (error) {
     console.error("Lỗi lấy danh sách playlist:", error);
+    res.status(500).json({
+      code: 500,
+      message: "Lỗi server!",
+    });
+  }
+}
+
+// [POST]
+module.exports.addToPlaylist = async (req, res) => {
+  try {
+    const { songId, playlistIds } = req.body;
+    if (!songId || !playlistIds || playlistIds.length === 0) {
+      return res.status(400).json({
+        code: 400,
+        message: "Dữ liệu không hợp lệ!",
+      });
+    }
+
+    const operations = playlistIds.map(async (playlistId) => {
+      const exists = await PlaylistSong.findOne({ playlistId, songId });
+      if(!exists) {
+        const newEntry = new PlaylistSong({ playlistId, songId });
+        return newEntry.save();
+      }
+    })
+
+    await Promise.all(operations);
+
+    res.json({
+      code: 200,
+      message: "Thêm bài hát vào danh sách phát thành công!",
+    });
+
+  } catch (error) {
+    console.error("Lỗi thêm bài hát vào danh sách phát:", error);
     res.status(500).json({
       code: 500,
       message: "Lỗi server!",
