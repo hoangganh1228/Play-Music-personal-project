@@ -3,6 +3,7 @@ const Topic = require("../../models/topic.model");
 const Singer = require("../../models/singer.model");
 const FavoriteSong  = require("../../models/favourite-song.model");
 const Playlist = require("../../models/playlist.model");
+const User = require("../../models/user.model");
 // [GET]
 module.exports.list = async (req, res) => {
   const find = {
@@ -17,6 +18,8 @@ module.exports.list = async (req, res) => {
     deleted: false
   })
 
+  // console.log(slugTopic);
+  
 
   if(slugTopic) {
     find.topicId = topic.id
@@ -34,8 +37,7 @@ module.exports.list = async (req, res) => {
       song.infoSinger = infoSinger 
     }
   }
-
-
+  
 
   res.render("client/pages/songs/list", {
     pageTitle: topic.title,
@@ -184,13 +186,17 @@ module.exports.listen = async (req, res) => {
 module.exports.playlistCreate = async (req, res) => {
   try {
     const { title, status } = req.body;
-    console.log(req.body);
-    console.log(title);
+    
+    const tokenUser = req.cookies.tokenUser;
+    const user = await User.findOne({
+      tokenUser: tokenUser
+    });  
     
     
     const objectPlaylist = new Playlist({
       title: title,
-      status: status
+      status: status,
+      userId: user.id
     })
     objectPlaylist.save();
 
@@ -206,4 +212,33 @@ module.exports.playlistCreate = async (req, res) => {
   }
   
 
+}
+
+// [GET]
+module.exports.getPlaylists = async (req, res) => {
+  try {
+    const tokenUser = req.cookies.tokenUser;
+    const user = await User.findOne({ tokenUser });
+  
+    if (!user) {
+      return res.status(401).json({
+        code: 401,
+        message: "Người dùng không hợp lệ!",
+      });
+    }
+  
+    const playlists = await Playlist.find({ userId: user._id });
+    // console.log(playlists);
+    
+    res.json({
+      code: 200,
+      playlists,
+    });
+  } catch (error) {
+    console.error("Lỗi lấy danh sách playlist:", error);
+    res.status(500).json({
+      code: 500,
+      message: "Lỗi server!",
+    });
+  }
 }

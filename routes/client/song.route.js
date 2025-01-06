@@ -15,4 +15,6 @@ router.patch("/listen/:idSong", controller.listen);
 
 router.post("/create/playlist", controller.playlistCreate);
 
+router.get("/playlists/list", controller.getPlaylists)
+
 module.exports = router;
