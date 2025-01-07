@@ -164,35 +164,35 @@ buttonAddPlaylist.addEventListener("click", () => {
   const idSong = buttonAddPlaylist.getAttribute("data-id");
 
   modalPlaylist.show();
-  const link = '/songs/playlists/list';
-  const options = {
-    method: "GET",
-    credentials: "include",
-  }
-  fetch(link, options)
-    .then(res => res.json())
-    .then(data => {
-      const playlistList = document.getElementById("playlistList");
-      playlistList.innerHTML = "";
+  // const link = '/songs/playlists/list';
+  // const options = {
+  //   method: "GET",
+  //   credentials: "include",
+  // }
+  // fetch(link, options)
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     const playlistList = document.getElementById("playlistList");
+  //     playlistList.innerHTML = "";
 
-      if(data.playlists && data.playlists.length > 0) {
-        data.playlists.forEach(playlist => {
-          const li = document.createElement("li");
-          li.innerHTML = `
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="playlist-${playlist._id}" value="${playlist._id}">
-              <label class="form-check-label" for="playlist-${playlist._id}">${playlist.title}</label>
-            </div>
-          `;
-          playlistList.appendChild(li);
-        }); 
-      } else {
-        playlistList.innerHTML = "<li>Chưa có danh sách phát nào</li>";
-      }
-    })
-    .catch(err => {
-      console.error("Lỗi khi tải danh sách playlist:", err);
-    });
+  //     if(data.playlists && data.playlists.length > 0) {
+  //       data.playlists.forEach(playlist => {
+  //         const li = document.createElement("li");
+  //         li.innerHTML = `
+  //           <div class="form-check">
+  //             <input class="form-check-input" type="checkbox" id="playlist-${playlist._id}" value="${playlist._id}">
+  //             <label class="form-check-label" for="playlist-${playlist._id}">${playlist.title}</label>
+  //           </div>
+  //         `;
+  //         playlistList.appendChild(li);
+  //       }); 
+  //     } else {
+  //       playlistList.innerHTML = "<li>Chưa có danh sách phát nào</li>";
+  //     }
+  //   })
+  //   .catch(err => {
+  //     console.error("Lỗi khi tải danh sách playlist:", err);
+  //   });
 
 })
 

@@ -58,7 +58,20 @@ block main
           h5.modal-title Chọn Playlist
           button.btn-close(data-bs-dismiss="modal" aria-label="Close")
         div.modal-body
-          ul#playlistList
+          if playlists && playlists.length > 0
+            ul#playlistList.unstyled-list
+              each playlist in playlists
+                li
+                  div.form-check
+                    input.form-check-input(
+                      type="checkbox" 
+                      id=`playlist-${playlist._id}` 
+                      value=`${playlist._id}` 
+                      checked=playlist.isChecked ? true : false
+                    )
+                    label.form-check-label(for=`playlist-${playlist._id}`) #{playlist.title}
+          else
+            p Chưa có danh sách phát nào
         div.modal-footer
           button.btn.btn-primary#createNewPlaylist(type="button") Tạo Playlist Mới
           button.btn.btn-success#addToPlaylist(type="button") Thêm vào Playlist

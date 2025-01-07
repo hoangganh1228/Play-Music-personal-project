@@ -55,9 +55,7 @@ module.exports.detail = async (req, res) => {
     deleted: false
   }
 
-  if(slugSong) {
-    find.slug = slugSong;
-  }
+  
 
   const song = await Song.findOne({
     slug: slugSong,
@@ -84,14 +82,40 @@ module.exports.detail = async (req, res) => {
 
   song.isFavoriteSong = favoriteSong
 
+  const tokenUser = req.cookies.tokenUser;
+    
+  const user = await User.findOne({ tokenUser });
+
+
+  if(!user) {
+    return res.status(401).json({
+      code: 401,
+      message: "Người dùng không hợp lệ!",
+    });
+  }
+
+  const playlists = await Playlist.find({ userId: user._id });
+
+  const playlistSongs = await PlaylistSong.find({ songId: song.id });
+
+  playlists.forEach((playlist) => {
+    playlist.isChecked = playlistSongs.some(
+      (ps) => ps.playlistId.toString() === playlist._id.toString()
+    )
+  })
   
+
+  if(slugSong) {
+    find.slug = slugSong;
+  }
 
 
   res.render("client/pages/songs/detail", {
     pageTitle: song.title,
     song: song,
     singer: singer,
-    topic: topic
+    topic: topic,
+    playlists: playlists
   });
 }
 
@@ -229,7 +253,7 @@ module.exports.getPlaylists = async (req, res) => {
     }
   
     const playlists = await Playlist.find({ userId: user._id });
-    console.log(playlists);
+    // console.log(playlists);
     
     res.json({
       code: 200,

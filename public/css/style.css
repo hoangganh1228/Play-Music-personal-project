@@ -806,3 +806,9 @@ p {
   cursor: pointer;
 }
 /* End Show Alert */  
+
+.unstyled-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
