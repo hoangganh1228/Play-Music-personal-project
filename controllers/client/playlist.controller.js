@@ -3,7 +3,7 @@ const Topic = require("../../models/topic.model");
 const Singer = require("../../models/singer.model");
 const User = require("../../models/user.model");
 const Playlist = require("../../models/playlist.model");
-const PlaylistSong = require("../../models/playlist-song.model");
+// const PlaylistSong = require("../../models/playlist-song.model");
 
 module.exports.index = async (req, res) => {
   const tokenUser = req.cookies.tokenUser;
@@ -21,47 +21,42 @@ module.exports.index = async (req, res) => {
 }
 
 
-  module.exports.list = async (req, res) => {
-    try {
-      const find = {
-        deleted: false
-      }
-      const playlistId = req.params.playlistId
-      if (playlistId) {
-        find.playlistId = playlistId
-      }
+module.exports.list = async (req, res) => {
+  try {
+    const playlistId = req.params.playlistId;
 
-      const playlist = await Playlist.findOne({
-        _id: playlistId
-      }).select("title")
+    const playlist = await Playlist.findById(playlistId)
+      .populate("songs")
+      .select("title songs");
 
-      const playlistSongs = await PlaylistSong.find(find).select("songId");
-
-      const songIds = await playlistSongs.map((ps) => ps.songId)
-
-      const songs = await Song.find({
-        _id: { $in: songIds },
-        deleted: false
+    if (!playlist) {
+      return res.status(404).json({
+        code: 404,
+        message: "Playlist không tồn tại!",
       });
-
-      for(const song of songs) {
-        const infoSinger  = await Singer.findOne({
-          _id: song.singerId,
-          deleted: false
-        }).select("fullName");
-        
-        if(infoSinger) {
-          song.infoSinger = infoSinger 
-        }
-      }
-      
-      res.render("client/pages/playlists/list", {
-        pageTitle: playlist.title,
-        songs: songs
-      });
-
-      
-    } catch (error) {
-      
     }
+
+    const songs = playlist.songs;
+
+
+    for(const song of songs) {
+      const infoSinger  = await Singer.findOne({
+        _id: song.singerId,
+        deleted: false
+      }).select("fullName");
+      
+      if(infoSinger) {
+        song.infoSinger = infoSinger 
+      }
+    }
+    
+    res.render("client/pages/playlists/list", {
+      pageTitle: playlist.title,
+      songs: songs
+    });
+
+    
+  } catch (error) {
+    
   }
+}

@@ -4,7 +4,7 @@ const Singer = require("../../models/singer.model");
 const FavoriteSong  = require("../../models/favourite-song.model");
 const User = require("../../models/user.model");
 const Playlist = require("../../models/playlist.model");
-const PlaylistSong = require("../../models/playlist-song.model");
+// const PlaylistSong = require("../../models/playlist-song.model");
 // [GET]
 module.exports.list = async (req, res) => {
   const find = {
@@ -95,13 +95,10 @@ module.exports.detail = async (req, res) => {
 
   const playlists = await Playlist.find({ userId: user._id });
 
-  const playlistSongs = await PlaylistSong.find({ songId: song.id });
-
   playlists.forEach((playlist) => {
-    playlist.isChecked = playlistSongs.some(
-      (ps) => ps.playlistId.toString() === playlist._id.toString()
-    )
+    playlist.isChecked = playlist.songs.includes(song._id.toString())
   })
+
   
 
   if(slugSong) {
@@ -279,11 +276,11 @@ module.exports.addToPlaylist = async (req, res) => {
     }
 
     const operations = playlistIds.map(async (playlistId) => {
-      const exists = await PlaylistSong.findOne({ playlistId, songId });
-      if(!exists) {
-        const newEntry = new PlaylistSong({ playlistId, songId });
-        return newEntry.save();
-      }
+      await Playlist.findByIdAndUpdate(
+        playlistId,
+        { $addToSet: { songs: songId } }, // $addToSet để tránh trùng lặp
+        { new: true }
+      );
     })
 
     await Promise.all(operations);

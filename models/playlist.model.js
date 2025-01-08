@@ -7,6 +7,12 @@ const playlistSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId, 
       ref: "User" 
     }, // Liên kết với bảng User
+    songs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Song",
+      },
+    ],
     status: { 
       type: String, 
       default: "public" // public, private
