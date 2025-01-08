@@ -38,12 +38,11 @@ module.exports.list = async (req, res) => {
       song.infoSinger = infoSinger 
     }
   }
-  
 
   res.render("client/pages/songs/list", {
     pageTitle: topic.title,
     songs: songs
-});
+  });
 }
 
 // [GET]

@@ -1,0 +1,17 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+block main
+  .container.my-3
+    .row
+      .col-12
+        +box-head(pageTitle)
+    .row
+      each item in playlists
+        .col-6.mb-3
+          div(class="song-item")
+            div(class="inner-image")
+              a(href=`/playlists/detail/${item.id}`)
+                img(src=item.avatar)
+            div(class="inner-content")
+              div(class="inner-title")
+                a(href=`/playlists/detail/${item.id}`) #{item.title}

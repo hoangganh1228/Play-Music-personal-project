@@ -4,6 +4,7 @@ const songRoute = require("./song.route");
 const favoriteSongRoute = require("./favorite.route");
 const searchRoutes = require("./search.route");
 const userRoute = require("./user.route");
+const playlistRoute = require("./playlist.route");
 const userMiddleware = require("../../middlewares/client/user.middleware");
 
 module.exports = (app) => {
@@ -20,5 +21,7 @@ module.exports = (app) => {
   app.use("/search", searchRoutes);
 
   app.use("/user", userRoute);
+
+  app.use("/playlists", playlistRoute);
 
 }

@@ -1,6 +1,7 @@
 const md5 = require("md5");
 const User = require("../../models/user.model");
 const ForgotPassword = require("../../models/forgot-password.model");
+const Playlist = require("../../models/playlist.model");
 
 const generateHelper = require("../../helpers/generate");
 const sendMailHelper = require("../../helpers/sendMail");
@@ -178,3 +179,4 @@ module.exports.resetPasswordPost = async (req, res) => {
   })
   res.redirect("/");
 };
+
