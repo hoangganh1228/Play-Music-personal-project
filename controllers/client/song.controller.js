@@ -276,6 +276,7 @@ module.exports.addToPlaylist = async (req, res) => {
     }
 
     const operations = playlistIds.map(async (playlistId) => {
+      
       await Playlist.findByIdAndUpdate(
         playlistId,
         { $addToSet: { songs: songId } }, // $addToSet để tránh trùng lặp

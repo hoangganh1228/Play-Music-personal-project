@@ -46,6 +46,43 @@ if(aplayer) {
 }
 //End APlayer
 
+
+// Play Playlist
+
+const playPlaylistButton = document.querySelector('[button-play-playlist]');
+const aplayerContainer = document.querySelector("#aplayer1");
+if(playPlaylistButton) {
+  playPlaylistButton.addEventListener('click', () => {
+    const playlistId = playPlaylistButton.getAttribute('data-id');
+    const link = `/playlists/play/${playlistId}`;
+    fetch(link)
+    .then((res) => res.json())
+    .then((data) => {
+      if(data.code === 200) {
+        const playlist = data.playlist;
+        const ap = new APlayer({
+          container: aplayerContainer,
+          audio: playlist.songs, // Danh sách bài hát
+          autoplay: true, // Tự động phát
+          listFolded: false, // Hiển thị danh sách phát
+          order: 'random', // Phát lần lượt theo danh sách
+          volume: 0.8, // Âm lượng mặc định
+          listMaxHeight: 90,
+        });
+        ap.on('ended', () => {
+          console.log('Bài hát kết thúc, chuyển bài tiếp theo');
+        });
+      } else {
+        alert('Không thể tải playlist!');
+      }
+    })
+    .catch((err) => {
+      console.error('Lỗi khi tải playlist:', err);
+    });
+  })
+}
+// End Play Playlist
+
 // Button Like
 
 const buttonLike = document.querySelector("[button-like]");

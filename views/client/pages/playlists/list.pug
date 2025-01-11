@@ -5,6 +5,14 @@ block main
     .row
       .col-12
         +box-head(pageTitle)
+        button(
+          class="btn btn-primary"
+          button-play-playlist
+          data-id=playlistId
+        ) Phát Playlist
+        .row.mt-3
+          .col-12
+            div#aplayer1
     .row
       each item in songs
         .col-6.mb-3
