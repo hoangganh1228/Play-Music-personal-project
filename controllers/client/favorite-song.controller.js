@@ -2,11 +2,21 @@ const Song = require("../../models/song.model");
 const Topic = require("../../models/topic.model");
 const Singer = require("../../models/singer.model");
 const FavoriteSong  = require("../../models/favourite-song.model");
+const User = require("../../models/user.model");
 
 // [GET]
 module.exports.index = async (req, res) => {
+  const tokenUser = req.cookies.tokenUser;
+  
+  const user = await User.findOne({ tokenUser })
+  
+  
+  if(!user) {
+    return res.redirect("/user/login")
+  }
+
   const favoriteSongs = await FavoriteSong.find({
-    // userId: "",
+    userId: user.id,
   });
 
   for(const item of favoriteSongs) {

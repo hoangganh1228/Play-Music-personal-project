@@ -85,19 +85,17 @@ module.exports.detail = async (req, res) => {
     
   const user = await User.findOne({ tokenUser });
 
+  let playlists = [];
 
-  if(!user) {
-    return res.status(401).json({
-      code: 401,
-      message: "Người dùng không hợp lệ!",
-    });
+  if(user) {
+    playlists = await Playlist.find({ userId: user._id });
+
+    playlists.forEach((playlist) => {
+      playlist.isChecked = playlist.songs.includes(song._id.toString())
+    })
   }
 
-  const playlists = await Playlist.find({ userId: user._id });
-
-  playlists.forEach((playlist) => {
-    playlist.isChecked = playlist.songs.includes(song._id.toString())
-  })
+  
 
   
 
@@ -117,6 +115,18 @@ module.exports.detail = async (req, res) => {
 
 // [PATCH]
 module.exports.like = async (req, res) => {
+  const tokenUser = req.cookies.tokenUser;
+
+  const user = await User.findOne({ tokenUser })
+  
+  
+  if(!user) {
+    return res.status(401).json({
+      code: 401,
+      message: "Người dùng chưa đăng nhập!",
+    });
+  }
+  
   const typeLike = req.params.typeLike;
   const idSong = req.params.idSong;
 
@@ -143,6 +153,18 @@ module.exports.like = async (req, res) => {
 
 // [PATCH]
 module.exports.favorite = async (req, res) => {
+  
+  const tokenUser = req.cookies.tokenUser;
+  
+  const user = await User.findOne({ tokenUser })
+  
+  if(!user) {
+    return res.status(401).json({
+      code: 401,
+      message: "Người dùng chưa đăng nhập!",
+    });
+  }
+
   const idSong = req.params.idSong;
   const typeFavorite = req.params.typeFavorite;
 
@@ -154,7 +176,7 @@ module.exports.favorite = async (req, res) => {
 
       if(!existFavoriteSong) {
         const record = new FavoriteSong({
-          // userId: "",
+          userId: user.id,
           songId: idSong
         });
         await record.save();
@@ -212,6 +234,13 @@ module.exports.playlistCreate = async (req, res) => {
     const user = await User.findOne({
       tokenUser: tokenUser
     });  
+
+    if(!user) {
+      return res.status(401).json({
+        code: 401,
+        message: "Người dùng chưa đăng nhập!",
+      });
+    }
     
     
     const objectPlaylist = new Playlist({

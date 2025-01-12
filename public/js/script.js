@@ -101,7 +101,14 @@ if(buttonLike) {
     }
 
     fetch(link, options)
-      .then(res => res.json())
+      .then((res) => {
+        if (res.status === 401) {
+          // Nếu người dùng chưa đăng nhập, chuyển hướng về trang đăng nhập
+          window.location.href = "/user/login";
+          return null;
+        }
+          return res.json();
+        })
       .then(data => {
         if(data && data.code == 200) {
           const span = buttonLike.querySelector("span");
@@ -131,7 +138,14 @@ if(buttonFavorite) {
     };
 
     fetch(link, options)
-      .then(res => res.json())
+      .then((res) => {
+        if (res.status === 401) {
+          // Nếu người dùng chưa đăng nhập, chuyển hướng về trang đăng nhập
+          window.location.href = "/user/login";
+          return null;
+        }
+          return res.json();
+      })
       .then(data => {
         if(data && data.code == 200) {
           buttonFavorite.classList.toggle("active");
@@ -261,10 +275,17 @@ savePlaylistButton.addEventListener("click", () => {
       })
     };
     fetch(link, options)
-      .then(res => res.json())
+      .then((res) => {
+        if (res.status === 401) {
+          // Nếu người dùng chưa đăng nhập, chuyển hướng về trang đăng nhập
+          window.location.href = "/user/login";
+          return null;
+        }
+        return res.json();
+      })
       .then(data => {
         if(data && data.code == 200) {
-          alert("Playlist mới đã được tạo thành công!");
+          window.location.reload();
           modalCreatePlaylist.hide();
         } else {
           alert("Có lỗi xảy ra khi tạo playlist!");
