@@ -812,3 +812,10 @@ p {
   padding: 0;
   margin: 0;
 }
+
+.inner-image-home {
+  width: 222px !important;
+  height: 222px;
+  aspect-ratio: auto !important;
+
+}

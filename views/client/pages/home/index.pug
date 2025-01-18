@@ -1,3 +1,83 @@
 extends ../../layouts/default.pug
 block main 
-  h1 #{pageTitle}
+  //- h1 #{pageTitle}
+  .container 
+    swiper-container.mySwiper(navigation="true")
+      swiper-slide
+        img(src="/images/carousel/1.png", alt="")
+      swiper-slide
+        img(src="/images/carousel/2.png", alt="")
+      swiper-slide
+        img(src="/images/carousel/3.png", alt="")
+      swiper-slide
+        img(src="/images/carousel/4.png", alt="")
+      swiper-slide
+        img(src="/images/carousel/5.png", alt="")
+      swiper-slide
+        img(src="/images/carousel/6.png", alt="")
+      swiper-slide
+        img(src="/images/carousel/1.png", alt="")
+      swiper-slide
+        img(src="/images/carousel/2.png", alt="")
+      swiper-slide
+        img(src="/images/carousel/3.png", alt="")
+  .container
+    .row 
+      .col-9 
+        h4(class="mt-3 mb-3 text-primary fw-bold") Nhạc xuân đón tết 
+        div
+          .row
+            each topic in topics
+              .col-3 
+                div(class="song-item")
+                  div(class="inner-image inner-image-home")
+                    a(href=`/songs/${topic.slug}`)
+                      img(
+                        class=""
+                        src=topic.avatar 
+                        alt="Avatar"
+                      )
+            
+        h4(class="mt-3 mb-3 text-primary fw-bold") Bài hát được nghe nhiều nhất
+        div
+          .row
+            each song in topViewSongs
+              .col-3 
+                div(class="song-item")
+                  div(class="inner-image inner-image-home")
+                    a(href=`/songs/detail/${song.slug}`) 
+                      img(src=song.avatar alt="Avatar")
+
+        h4(class="mt-3 mb-3 text-primary fw-bold") Bài hát mới nhất
+        div
+          .row
+            each song in newestSong
+              .col-3 
+                div(class="song-item mt-2")
+                  div(class="inner-image inner-image-home")
+                    a(href=`/songs/detail/${song.slug}`) 
+                      img(src=song.avatar alt="Avatar")
+            
+      .col-3 
+        h4(class="mt-3 mb-3 text-danger fw-bold") BXH BÀI HÁT
+        if topLikedSongs && topLikedSongs.length > 0
+          .song-item.mb-3
+            div.inner-image
+              a.text-decoration-none(href=`/songs/detail/${topLikedSongs[0].slug}`)
+                img(src=topLikedSongs[0].avatar alt="Avatar" class="img-fluid rounded")
+            div.inner-content.mt-2
+              a.text-decoration-none.text-dark(href=`/songs/detail/${topLikedSongs[0].slug}`)
+                p.mb-1 #{topLikedSongs[0].title}
+              small.text-muted #{topLikedSongs[0].infoSinger.fullName || 'Không rõ'}
+        
+        ul.list-group
+          each song, index in topLikedSongs.slice(1) 
+            li.list-group-item
+              a.text-decoration-none.text-dark(href=`/songs/detail/${song.slug}`)
+                p.mb-0.text-truncate #{index + 2}. #{song.title}
+                small.text-muted #{song.infoSinger.fullName || 'Không rõ'}
+
+
+          
+        
+      

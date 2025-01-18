@@ -4,7 +4,6 @@ const Singer = require("../../models/singer.model");
 const FavoriteSong  = require("../../models/favourite-song.model");
 const User = require("../../models/user.model");
 const Playlist = require("../../models/playlist.model");
-// const PlaylistSong = require("../../models/playlist-song.model");
 // [GET]
 module.exports.list = async (req, res) => {
   const find = {
