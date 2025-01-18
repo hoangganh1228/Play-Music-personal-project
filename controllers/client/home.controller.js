@@ -5,6 +5,7 @@ const FavoriteSong  = require("../../models/favourite-song.model");
 const User = require("../../models/user.model");
 const Playlist = require("../../models/playlist.model");
 const { favorite } = require("./song.controller");
+const Carousel = require("../../models/carousel.model");
 
 // [GET] 
 module.exports.index = async(req, res) => {
@@ -12,6 +13,8 @@ module.exports.index = async(req, res) => {
     status: "active",
     deleted: false
   }
+
+  const carousels = await Carousel.find({})
 
   const topics = await Topic.find(find).limit(4);
   
@@ -42,6 +45,7 @@ module.exports.index = async(req, res) => {
     topics: topics,
     topViewSongs: topViewSongs,
     newestSong: newestSong,
-    topLikedSongs: topLikedSongs
+    topLikedSongs: topLikedSongs,
+    carousels: carousels
   })
 }

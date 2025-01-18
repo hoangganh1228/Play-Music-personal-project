@@ -6,6 +6,7 @@ const singerRoute = require("../../routes/admin/singer.route");
 const accountRoute = require("../../routes/admin/account.route");
 const roleRoute = require("../../routes/admin/role.route");
 const authRoute = require("../../routes/admin/auth.route");
+const carouselRoute = require("../../routes/admin/carousel.route");
 const authMiddleware = require("../../middlewares/admin/auth.middleware");
 
 module.exports = (app) => {
@@ -45,6 +46,12 @@ module.exports = (app) => {
     PATH_ADMIN + "/accounts",
     authMiddleware.requireAuth, 
     accountRoute
+  );
+
+  app.use(
+    PATH_ADMIN + "/carousel",
+    authMiddleware.requireAuth, 
+    carouselRoute
   );
 
   app.use(

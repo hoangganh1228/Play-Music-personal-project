@@ -1,0 +1,83 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(5000)
+  +alert-error(5000)
+  .row
+    .col-lg-12.p-4
+      h3.mb-4 #{pageTitle}
+      // Carousel sections
+      .card.border-0.shadow.mb-4
+        .card-body
+          .d-flex.align-items-center.justify-content-between.mb-3
+            h5.card-title.m-0 Ảnh
+            button.btn.btn-dark.shadow-none.btn-sm(
+              data-bs-target="#carousel-s" 
+              data-bs-toggle="modal" 
+              type="button"
+              )
+              i.bi.bi-plus-square 
+              | Thêm ảnh
+          #carousel-data.row
+            each carousel in carousels 
+              each image in carousel.images
+                .col-md-4.mb-3
+                  .card.bg-dark.text-white
+                    img.card-img(src=`${image}`)
+                    .card-img-overlay.text-end
+                      button.btn.btn-danger.btn-sm.shadow-none(
+                        button-delete  
+                        data-url=image
+                        )
+                        i.bi.bi-trash 
+                        | Xóa
+      #carousel-s.modal.fade(
+        aria-hidden="true" 
+        aria-labelledby="staticBackdropLabel" 
+        tabindex="-1" 
+        data-bs-keyboard="true" 
+        data-bs-backdrop="static"
+        )
+        .modal-dialog
+          form(
+            id="form-carousel"
+            action=`${prefixAdmin}/carousel/upload`
+            method="POST"
+            enctype="multipart/form-data"
+          )
+            .modal-content
+              .modal-header
+                h5.modal-title Thêm ảnh
+                button.btn-close(
+                  aria-label="Close" 
+                  data-bs-dismiss="modal" 
+                  type="button"
+                  )
+              .modal-body
+                .mb-3
+                  label.form-label.fw-bold Ảnh
+                  input.form-control.shadow-none(
+                    required="" 
+                    accept=".jpg, .png, .webp, .jpeg" 
+                    id="images" 
+                    name="images" 
+                    type="file"
+                    multiple 
+                  )
+              .modal-footer
+                button.btn.text-secondary.shadow-none(
+                  data-bs-dismiss="modal" 
+                  onclick="carousel_picture.value=''" 
+                  type="button"
+                  ) Hủy
+                button.btn.btn-primary.text-white.shadow-none(type="submit") Gửi
+
+  form(
+    action=""
+    method="POST"
+    id="form-delete-image"
+    data-path=`${prefixAdmin}/carousel/delete`
+  )
+  
+  script(src="/admin/js/carousel.js")

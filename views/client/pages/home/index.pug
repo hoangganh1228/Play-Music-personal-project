@@ -1,26 +1,13 @@
 extends ../../layouts/default.pug
 block main 
   //- h1 #{pageTitle}
-  .container 
-    swiper-container.mySwiper(navigation="true")
-      swiper-slide
-        img(src="/images/carousel/1.png", alt="")
-      swiper-slide
-        img(src="/images/carousel/2.png", alt="")
-      swiper-slide
-        img(src="/images/carousel/3.png", alt="")
-      swiper-slide
-        img(src="/images/carousel/4.png", alt="")
-      swiper-slide
-        img(src="/images/carousel/5.png", alt="")
-      swiper-slide
-        img(src="/images/carousel/6.png", alt="")
-      swiper-slide
-        img(src="/images/carousel/1.png", alt="")
-      swiper-slide
-        img(src="/images/carousel/2.png", alt="")
-      swiper-slide
-        img(src="/images/carousel/3.png", alt="")
+  .container-fluid.px-lg-4.mt-4
+    .swiper.swiper-container
+      .swiper-wrapper
+        each carousel in carousels
+          each image in carousel.images
+            .swiper-slide
+              img.w-100.d-block(src=`${image}`)
   .container
     .row 
       .col-9 
