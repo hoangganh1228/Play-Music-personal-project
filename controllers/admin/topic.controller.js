@@ -30,7 +30,7 @@ module.exports.createPost = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
-      avatar: req.body.avatar
+      avatar: req.body.avatar,
     })  
   
     objectTopic.save();
@@ -60,11 +60,14 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /topics/edit
 module.exports.editPatch = async (req, res) => {
+  console.log(req.body);
+  
   const objectTopic = {
     title: req.body.title,
     description: req.body.description,
     status: req.body.status,
-    avatar: req.body.avatar
+    avatar: req.body.avatar,
+
   }
 
   const id = req.params.id;

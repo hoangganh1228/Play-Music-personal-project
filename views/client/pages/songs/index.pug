@@ -1,0 +1,17 @@
+extends ../../layouts/default.pug
+block main 
+  .container
+    .row
+      .col-12
+        each topic in topicsWithSongs
+          h3.text-primary.mb-3.mt-3.fw-bold #{topic.title}
+          div
+            .row
+              each song in topic.infoSong
+                .col-2 
+                  div(class="song-item mt-2")
+                    div(class="inner-image inner-image-home")
+                      a(href=`/songs/detail/${song.slug}`) 
+                        img(src=song.avatar alt="Avatar")
+
+

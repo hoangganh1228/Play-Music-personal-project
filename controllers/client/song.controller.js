@@ -4,6 +4,47 @@ const Singer = require("../../models/singer.model");
 const FavoriteSong  = require("../../models/favourite-song.model");
 const User = require("../../models/user.model");
 const Playlist = require("../../models/playlist.model");
+
+// [GET]
+module.exports.index = async (req, res) => {
+  const find = {
+    status: "active",
+    deleted: false
+  }
+
+  const topics = await Topic.find(find);
+
+  const topicsWithSongs = await Promise.all(
+    topics.map(async (topic) => {
+      const infoSong = await Song.find({
+        topicId: topic._id,
+        deleted: false,
+      }).select("title avatar slug");
+      
+      return {
+        ...topic.toObject(),
+        infoSong, 
+      };
+    })
+
+  )
+
+
+  
+
+  const topViewSongs = await Song.find(find).sort( {listen: -1} ).limit(8)
+  const topLikedSongs = await Song.find(find).sort( {like: -1} ).limit(8)
+
+
+  res.render("client/pages/songs/index", {
+    pageTitle: "Trang chủ",
+    topicsWithSongs: topicsWithSongs,
+    topViewSongs: topViewSongs,
+    topLikedSongs: topLikedSongs
+  })
+
+}
+
 // [GET]
 module.exports.list = async (req, res) => {
   const find = {

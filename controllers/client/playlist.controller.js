@@ -43,7 +43,7 @@ module.exports.list = async (req, res) => {
       const infoSinger  = await Singer.findOne({
         _id: song.singerId,
         deleted: false
-      }).select("fullName");
+      }).select("fullName").limit(10);
       
       if(infoSinger) {
         song.infoSinger = infoSinger 
