@@ -3,8 +3,8 @@ var swiper = new Swiper(".swiper-container", {
   effect: "fade",
   loop: true,
   autoplay: {
-      delay: 3000,
-      disableOnInteraction: false,
+    delay: 3000,
+    disableOnInteraction: false,
   }
 });
 // APlayer
@@ -17,12 +17,14 @@ if(aplayer) {
     dataSinger = JSON.parse(dataSinger);
     const ap = new APlayer({
         container: aplayer,
+        lrcType: 1,
         audio: [
           {
             name: dataSong.title,
             artist: dataSinger.fullName,
             url: dataSong.audio,
             cover: dataSong.avatar,
+            lrc: dataSong.lyrics
           },
         ],
         autoplay: true,
