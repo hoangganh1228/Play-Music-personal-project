@@ -10,7 +10,7 @@ module.exports.index = async (req, res) => {
   const user = await User.findOne({ tokenUser });
 
   if(!user) {
-    res.redirect("/user/login")
+    return res.redirect("/user/login")
   }
 
   const playlists = await Playlist.find({ userId: user._id });

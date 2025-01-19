@@ -272,7 +272,7 @@ savePlaylistButton.addEventListener("click", () => {
   
   if (newPlaylistName && statusPlaylist) {
     const link = `/songs/create/playlist`;
-
+    
     const options = {
       method: "POST",
       headers: {

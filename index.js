@@ -6,7 +6,7 @@ const methodOverride = require('method-override')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const flash = require('express-flash');
-
+const moment = require('moment');
 const systemConfig = require("./config/system");
 require("dotenv").config();
 
@@ -38,6 +38,8 @@ app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
 // End Flash
+
+app.locals.moment = moment;
 
 // TinyMCE
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));

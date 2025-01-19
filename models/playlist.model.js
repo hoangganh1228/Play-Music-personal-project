@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const playlistSchema = new mongoose.Schema(
   {
     title: String, // Tên danh sách phát
+    avatar: {
+      type: String,
+      default: "http://res.cloudinary.com/dnczc3gzn/image/upload/v1737274547/x1o3dmq55ntiox4iqjel.jpg",
+    },
     userId: { 
       type: mongoose.Schema.Types.ObjectId, 
       ref: "User" 
